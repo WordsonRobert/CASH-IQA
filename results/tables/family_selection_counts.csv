@@ -1,0 +1,7 @@
+ds,global_krr_lin,global_krr_rbf,local_krr_lin,local_krr_rbf,lwlr,nw
+csiq,0,1,1,3,3,2
+kadid10k,1,1,3,3,2,0
+koniq10k,6,4,0,0,0,0
+livec,6,4,0,0,0,0
+spaq,7,3,0,0,0,0
+tid2013,2,1,3,2,1,1

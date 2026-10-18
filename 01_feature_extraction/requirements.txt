@@ -1,0 +1,11 @@
+torch>=2.1
+torchvision
+timm>=0.9
+h5py
+numpy
+pandas
+scipy
+pillow
+openpyxl
+dotmap
+# CLIP: either   pip install git+https://github.com/openai/CLIP.git   or   pip install open_clip_torch

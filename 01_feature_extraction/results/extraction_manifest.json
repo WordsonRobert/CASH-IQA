@@ -1,0 +1,484 @@
+{
+  "runs": [
+    {
+      "dataset": "kadid10k",
+      "encoder": "arniqa",
+      "dims": {
+        "main": 4096,
+        "proj": 256
+      },
+      "seconds": 167.0,
+      "info": {
+        "weights": "<project>/ARNIQA/weights/ARNIQA.pth",
+        "sha256": "ad2022e59b1040d5bab24f9325c10d0215956a2061248a36c15edaec3e60fcd1"
+      },
+      "time": "2026-10-14 19:36:06"
+    },
+    {
+      "dataset": "csiq",
+      "encoder": "arniqa",
+      "dims": {
+        "main": 4096,
+        "proj": 256
+      },
+      "seconds": 15.1,
+      "info": {
+        "weights": "<project>/ARNIQA/weights/ARNIQA.pth",
+        "sha256": "ad2022e59b1040d5bab24f9325c10d0215956a2061248a36c15edaec3e60fcd1"
+      },
+      "time": "2026-10-14 19:36:21"
+    },
+    {
+      "dataset": "tid2013",
+      "encoder": "arniqa",
+      "dims": {
+        "main": 4096,
+        "proj": 256
+      },
+      "seconds": 50.2,
+      "info": {
+        "weights": "<project>/ARNIQA/weights/ARNIQA.pth",
+        "sha256": "ad2022e59b1040d5bab24f9325c10d0215956a2061248a36c15edaec3e60fcd1"
+      },
+      "time": "2026-10-14 19:37:12"
+    },
+    {
+      "dataset": "koniq10k",
+      "encoder": "arniqa",
+      "dims": {
+        "main": 4096,
+        "proj": 256
+      },
+      "seconds": 169.7,
+      "info": {
+        "weights": "<project>/ARNIQA/weights/ARNIQA.pth",
+        "sha256": "ad2022e59b1040d5bab24f9325c10d0215956a2061248a36c15edaec3e60fcd1"
+      },
+      "time": "2026-10-14 19:40:03"
+    },
+    {
+      "dataset": "livec",
+      "encoder": "arniqa",
+      "dims": {
+        "main": 4096,
+        "proj": 256
+      },
+      "seconds": 20.5,
+      "info": {
+        "weights": "<project>/ARNIQA/weights/ARNIQA.pth",
+        "sha256": "ad2022e59b1040d5bab24f9325c10d0215956a2061248a36c15edaec3e60fcd1"
+      },
+      "time": "2026-10-14 19:40:24"
+    },
+    {
+      "dataset": "spaq",
+      "encoder": "arniqa",
+      "dims": {
+        "main": 4096,
+        "proj": 256
+      },
+      "seconds": 189.2,
+      "info": {
+        "weights": "<project>/ARNIQA/weights/ARNIQA.pth",
+        "sha256": "ad2022e59b1040d5bab24f9325c10d0215956a2061248a36c15edaec3e60fcd1"
+      },
+      "time": "2026-10-14 19:43:35"
+    },
+    {
+      "dataset": "kadid10k",
+      "encoder": "contrique",
+      "dims": {
+        "main": 4096
+      },
+      "seconds": 153.7,
+      "info": {
+        "weights": "<project>/CONTRIQUE/models/CONTRIQUE_checkpoint25.tar",
+        "sha256": "2c53659ac022753fd8cf1b33e2838840184a6a24a9f760daf68d05f5d2402be8"
+      },
+      "time": "2026-10-14 19:46:14"
+    },
+    {
+      "dataset": "csiq",
+      "encoder": "contrique",
+      "dims": {
+        "main": 4096
+      },
+      "seconds": 17.4,
+      "info": {
+        "weights": "<project>/CONTRIQUE/models/CONTRIQUE_checkpoint25.tar",
+        "sha256": "2c53659ac022753fd8cf1b33e2838840184a6a24a9f760daf68d05f5d2402be8"
+      },
+      "time": "2026-10-14 19:46:31"
+    },
+    {
+      "dataset": "tid2013",
+      "encoder": "contrique",
+      "dims": {
+        "main": 4096
+      },
+      "seconds": 46.1,
+      "info": {
+        "weights": "<project>/CONTRIQUE/models/CONTRIQUE_checkpoint25.tar",
+        "sha256": "2c53659ac022753fd8cf1b33e2838840184a6a24a9f760daf68d05f5d2402be8"
+      },
+      "time": "2026-10-14 19:47:18"
+    },
+    {
+      "dataset": "koniq10k",
+      "encoder": "contrique",
+      "dims": {
+        "main": 4096
+      },
+      "seconds": 555.6,
+      "info": {
+        "weights": "<project>/CONTRIQUE/models/CONTRIQUE_checkpoint25.tar",
+        "sha256": "2c53659ac022753fd8cf1b33e2838840184a6a24a9f760daf68d05f5d2402be8"
+      },
+      "time": "2026-10-14 19:56:35"
+    },
+    {
+      "dataset": "livec",
+      "encoder": "contrique",
+      "dims": {
+        "main": 4096
+      },
+      "seconds": 23.3,
+      "info": {
+        "weights": "<project>/CONTRIQUE/models/CONTRIQUE_checkpoint25.tar",
+        "sha256": "2c53659ac022753fd8cf1b33e2838840184a6a24a9f760daf68d05f5d2402be8"
+      },
+      "time": "2026-10-14 19:56:58"
+    },
+    {
+      "dataset": "spaq",
+      "encoder": "contrique",
+      "dims": {
+        "main": 4096
+      },
+      "seconds": 217.2,
+      "info": {
+        "weights": "<project>/CONTRIQUE/models/CONTRIQUE_checkpoint25.tar",
+        "sha256": "2c53659ac022753fd8cf1b33e2838840184a6a24a9f760daf68d05f5d2402be8"
+      },
+      "time": "2026-10-14 20:00:37"
+    },
+    {
+      "dataset": "kadid10k",
+      "encoder": "resnet50",
+      "dims": {
+        "main": 4096
+      },
+      "seconds": 166.5,
+      "info": {
+        "weights": "torchvision ResNet50_Weights.IMAGENET1K_V1"
+      },
+      "time": "2026-10-14 20:03:26"
+    },
+    {
+      "dataset": "csiq",
+      "encoder": "resnet50",
+      "dims": {
+        "main": 4096
+      },
+      "seconds": 15.2,
+      "info": {
+        "weights": "torchvision ResNet50_Weights.IMAGENET1K_V1"
+      },
+      "time": "2026-10-14 20:03:41"
+    },
+    {
+      "dataset": "tid2013",
+      "encoder": "resnet50",
+      "dims": {
+        "main": 4096
+      },
+      "seconds": 51.0,
+      "info": {
+        "weights": "torchvision ResNet50_Weights.IMAGENET1K_V1"
+      },
+      "time": "2026-10-14 20:04:32"
+    },
+    {
+      "dataset": "koniq10k",
+      "encoder": "resnet50",
+      "dims": {
+        "main": 4096
+      },
+      "seconds": 167.2,
+      "info": {
+        "weights": "torchvision ResNet50_Weights.IMAGENET1K_V1"
+      },
+      "time": "2026-10-14 20:07:21"
+    },
+    {
+      "dataset": "livec",
+      "encoder": "resnet50",
+      "dims": {
+        "main": 4096
+      },
+      "seconds": 20.1,
+      "info": {
+        "weights": "torchvision ResNet50_Weights.IMAGENET1K_V1"
+      },
+      "time": "2026-10-14 20:07:41"
+    },
+    {
+      "dataset": "spaq",
+      "encoder": "resnet50",
+      "dims": {
+        "main": 4096
+      },
+      "seconds": 187.5,
+      "info": {
+        "weights": "torchvision ResNet50_Weights.IMAGENET1K_V1"
+      },
+      "time": "2026-10-14 20:10:50"
+    },
+    {
+      "dataset": "kadid10k",
+      "encoder": "dinov2",
+      "dims": {
+        "main": 4096,
+        "canon": 2048
+      },
+      "seconds": 1535.4,
+      "info": {
+        "weights": "torch.hub facebookresearch/dinov2 dinov2_vitl14"
+      },
+      "time": "2026-10-14 20:36:34"
+    },
+    {
+      "dataset": "csiq",
+      "encoder": "dinov2",
+      "dims": {
+        "main": 4096,
+        "canon": 2048
+      },
+      "seconds": 131.9,
+      "info": {
+        "weights": "torch.hub facebookresearch/dinov2 dinov2_vitl14"
+      },
+      "time": "2026-10-14 20:38:46"
+    },
+    {
+      "dataset": "tid2013",
+      "encoder": "dinov2",
+      "dims": {
+        "main": 4096,
+        "canon": 2048
+      },
+      "seconds": 455.4,
+      "info": {
+        "weights": "torch.hub facebookresearch/dinov2 dinov2_vitl14"
+      },
+      "time": "2026-10-14 20:46:22"
+    },
+    {
+      "dataset": "koniq10k",
+      "encoder": "dinov2",
+      "dims": {
+        "main": 4096,
+        "canon": 2048
+      },
+      "seconds": 1570.4,
+      "info": {
+        "weights": "torch.hub facebookresearch/dinov2 dinov2_vitl14"
+      },
+      "time": "2026-10-14 21:12:35"
+    },
+    {
+      "dataset": "livec",
+      "encoder": "dinov2",
+      "dims": {
+        "main": 4096,
+        "canon": 2048
+      },
+      "seconds": 182.1,
+      "info": {
+        "weights": "torch.hub facebookresearch/dinov2 dinov2_vitl14"
+      },
+      "time": "2026-10-14 21:15:37"
+    },
+    {
+      "dataset": "spaq",
+      "encoder": "dinov2",
+      "dims": {
+        "main": 4096,
+        "canon": 2048
+      },
+      "seconds": 1719.1,
+      "info": {
+        "weights": "torch.hub facebookresearch/dinov2 dinov2_vitl14"
+      },
+      "time": "2026-10-14 21:44:18"
+    },
+    {
+      "dataset": "kadid10k",
+      "encoder": "clip",
+      "dims": {
+        "main": 1536,
+        "canon": 768
+      },
+      "seconds": 1762.6,
+      "info": {
+        "weights": "openai/clip ViT-L/14"
+      },
+      "time": "2026-10-14 22:13:48"
+    },
+    {
+      "dataset": "csiq",
+      "encoder": "clip",
+      "dims": {
+        "main": 1536,
+        "canon": 768
+      },
+      "seconds": 151.3,
+      "info": {
+        "weights": "openai/clip ViT-L/14"
+      },
+      "time": "2026-10-14 22:16:19"
+    },
+    {
+      "dataset": "tid2013",
+      "encoder": "clip",
+      "dims": {
+        "main": 1536,
+        "canon": 768
+      },
+      "seconds": 521.8,
+      "info": {
+        "weights": "openai/clip ViT-L/14"
+      },
+      "time": "2026-10-14 22:25:01"
+    },
+    {
+      "dataset": "koniq10k",
+      "encoder": "clip",
+      "dims": {
+        "main": 1536,
+        "canon": 768
+      },
+      "seconds": 1754.5,
+      "info": {
+        "weights": "openai/clip ViT-L/14"
+      },
+      "time": "2026-10-14 22:54:17"
+    },
+    {
+      "dataset": "livec",
+      "encoder": "clip",
+      "dims": {
+        "main": 1536,
+        "canon": 768
+      },
+      "seconds": 202.6,
+      "info": {
+        "weights": "openai/clip ViT-L/14"
+      },
+      "time": "2026-10-14 22:57:39"
+    },
+    {
+      "dataset": "spaq",
+      "encoder": "clip",
+      "dims": {
+        "main": 1536,
+        "canon": 768
+      },
+      "seconds": 1935.1,
+      "info": {
+        "weights": "openai/clip ViT-L/14"
+      },
+      "time": "2026-10-14 23:29:55"
+    },
+    {
+      "dataset": "kadid10k",
+      "encoder": "mae",
+      "dims": {
+        "main": 4096,
+        "canon": 2048
+      },
+      "seconds": 1119.0,
+      "info": {
+        "weights": "timm vit_large_patch16_224.mae",
+        "timm": "1.0.27"
+      },
+      "time": "2026-10-14 23:48:42"
+    },
+    {
+      "dataset": "csiq",
+      "encoder": "mae",
+      "dims": {
+        "main": 4096,
+        "canon": 2048
+      },
+      "seconds": 95.6,
+      "info": {
+        "weights": "timm vit_large_patch16_224.mae",
+        "timm": "1.0.27"
+      },
+      "time": "2026-10-14 23:50:18"
+    },
+    {
+      "dataset": "tid2013",
+      "encoder": "mae",
+      "dims": {
+        "main": 4096,
+        "canon": 2048
+      },
+      "seconds": 329.4,
+      "info": {
+        "weights": "timm vit_large_patch16_224.mae",
+        "timm": "1.0.27"
+      },
+      "time": "2026-10-14 23:55:48"
+    },
+    {
+      "dataset": "koniq10k",
+      "encoder": "mae",
+      "dims": {
+        "main": 4096,
+        "canon": 2048
+      },
+      "seconds": 1114.3,
+      "info": {
+        "weights": "timm vit_large_patch16_224.mae",
+        "timm": "1.0.27"
+      },
+      "time": "2026-10-15 00:14:24"
+    },
+    {
+      "dataset": "livec",
+      "encoder": "mae",
+      "dims": {
+        "main": 4096,
+        "canon": 2048
+      },
+      "seconds": 127.9,
+      "info": {
+        "weights": "timm vit_large_patch16_224.mae",
+        "timm": "1.0.27"
+      },
+      "time": "2026-10-15 00:16:32"
+    },
+    {
+      "dataset": "spaq",
+      "encoder": "mae",
+      "dims": {
+        "main": 4096,
+        "canon": 2048
+      },
+      "seconds": 1232.7,
+      "info": {
+        "weights": "timm vit_large_patch16_224.mae",
+        "timm": "1.0.27"
+      },
+      "time": "2026-10-15 00:37:07"
+    }
+  ],
+  "env": {
+    "python": "3.13.11",
+    "torch": "2.11.0+cu128",
+    "gpu": "NVIDIA GeForce RTX 4050 Laptop GPU",
+    "host": "local-workstation"
+  }
+}

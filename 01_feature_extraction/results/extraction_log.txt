@@ -1,0 +1,129 @@
+device=cuda NVIDIA GeForce RTX 4050 Laptop GPU | out=<repo>/features
+  [ok] kadid10k: 10125 images, 81 groups
+  [ok] csiq: 866 images, 30 groups
+  [ok] tid2013: 3000 images, 25 groups
+  [ok] koniq10k: 10073 images, 10073 groups
+  [ok] livec: 1162 images, 1162 groups
+  [ok] spaq: 11125 images, 11125 groups
+  [arniqa] kadid10k: {'main': 4096, 'proj': 256} in 2.8 min
+  [arniqa] csiq: {'main': 4096, 'proj': 256} in 0.3 min
+  [arniqa] tid2013: {'main': 4096, 'proj': 256} in 0.8 min
+  [arniqa] koniq10k: {'main': 4096, 'proj': 256} in 2.8 min
+  [arniqa] livec: {'main': 4096, 'proj': 256} in 0.3 min
+~/miniconda3/lib/python3.13/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+~/miniconda3/lib/python3.13/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+  [arniqa] spaq: {'main': 4096, 'proj': 256} in 3.2 min
+  [contrique] kadid10k: {'main': 4096} in 2.6 min
+  [contrique] csiq: {'main': 4096} in 0.3 min
+  [contrique] tid2013: {'main': 4096} in 0.8 min
+  [contrique] koniq10k: {'main': 4096} in 9.3 min
+  [contrique] livec: {'main': 4096} in 0.4 min
+  [contrique] spaq: {'main': 4096} in 3.6 min
+  [resnet50] kadid10k: {'main': 4096} in 2.8 min
+  [resnet50] csiq: {'main': 4096} in 0.3 min
+  [resnet50] tid2013: {'main': 4096} in 0.9 min
+  [resnet50] koniq10k: {'main': 4096} in 2.8 min
+  [resnet50] livec: {'main': 4096} in 0.3 min
+Using cache found in ~/.cache/torch/hub/facebookresearch_dinov2_main
+~/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/swiglu_ffn.py:51: UserWarning: xFormers is not available (SwiGLU)
+  warnings.warn("xFormers is not available (SwiGLU)")
+~/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/attention.py:33: UserWarning: xFormers is not available (Attention)
+  warnings.warn("xFormers is not available (Attention)")
+~/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/block.py:40: UserWarning: xFormers is not available (Block)
+  warnings.warn("xFormers is not available (Block)")
+  [resnet50] spaq: {'main': 4096} in 3.1 min
+  [dinov2] kadid10k: {'main': 4096, 'canon': 2048} in 25.6 min
+  [dinov2] csiq: {'main': 4096, 'canon': 2048} in 2.2 min
+  [dinov2] tid2013: {'main': 4096, 'canon': 2048} in 7.6 min
+  [dinov2] koniq10k: {'main': 4096, 'canon': 2048} in 26.2 min
+  [dinov2] livec: {'main': 4096, 'canon': 2048} in 3.0 min
+  [dinov2] spaq: {'main': 4096, 'canon': 2048} in 28.7 min
+  [clip] kadid10k: {'main': 1536, 'canon': 768} in 29.4 min
+  [clip] csiq: {'main': 1536, 'canon': 768} in 2.5 min
+  [clip] tid2013: {'main': 1536, 'canon': 768} in 8.7 min
+  [clip] koniq10k: {'main': 1536, 'canon': 768} in 29.2 min
+  [clip] livec: {'main': 1536, 'canon': 768} in 3.4 min
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+  [clip] spaq: {'main': 1536, 'canon': 768} in 32.3 min
+  [mae] kadid10k: {'main': 4096, 'canon': 2048} in 18.6 min
+  [mae] csiq: {'main': 4096, 'canon': 2048} in 1.6 min
+  [mae] tid2013: {'main': 4096, 'canon': 2048} in 5.5 min
+  [mae] koniq10k: {'main': 4096, 'canon': 2048} in 18.6 min
+  [mae] livec: {'main': 4096, 'canon': 2048} in 2.1 min
+  [mae] spaq: {'main': 4096, 'canon': 2048} in 20.5 min
+done. next: python verify_features.py
+{'dataset': 'csiq', 'encoder': 'arniqa', 'variant': 'main', 'dim': 4096, 'srocc': 0.9539, 'published': 0.962}
+{'dataset': 'csiq', 'encoder': 'arniqa', 'variant': 'proj', 'dim': 256, 'srocc': 0.9509, 'published': None}
+{'dataset': 'csiq', 'encoder': 'clip', 'variant': 'canon', 'dim': 768, 'srocc': 0.7988, 'published': None}
+{'dataset': 'csiq', 'encoder': 'clip', 'variant': 'main', 'dim': 1536, 'srocc': 0.8696, 'published': None}
+{'dataset': 'csiq', 'encoder': 'contrique', 'variant': 'main', 'dim': 4096, 'srocc': 0.9209, 'published': 0.942}
+{'dataset': 'csiq', 'encoder': 'dinov2', 'variant': 'canon', 'dim': 2048, 'srocc': 0.4908, 'published': None}
+{'dataset': 'csiq', 'encoder': 'dinov2', 'variant': 'main', 'dim': 4096, 'srocc': 0.6542, 'published': None}
+{'dataset': 'csiq', 'encoder': 'mae', 'variant': 'canon', 'dim': 2048, 'srocc': 0.7533, 'published': None}
+{'dataset': 'csiq', 'encoder': 'mae', 'variant': 'main', 'dim': 4096, 'srocc': 0.7566, 'published': None}
+{'dataset': 'csiq', 'encoder': 'resnet50', 'variant': 'main', 'dim': 4096, 'srocc': 0.6408, 'published': None}
+{'dataset': 'kadid10k', 'encoder': 'arniqa', 'variant': 'main', 'dim': 4096, 'srocc': 0.9196, 'published': 0.908}
+{'dataset': 'kadid10k', 'encoder': 'arniqa', 'variant': 'proj', 'dim': 256, 'srocc': 0.9139, 'published': None}
+{'dataset': 'kadid10k', 'encoder': 'clip', 'variant': 'canon', 'dim': 768, 'srocc': 0.84, 'published': None}
+{'dataset': 'kadid10k', 'encoder': 'clip', 'variant': 'main', 'dim': 1536, 'srocc': 0.8711, 'published': None}
+{'dataset': 'kadid10k', 'encoder': 'contrique', 'variant': 'main', 'dim': 4096, 'srocc': 0.9316, 'published': 0.934}
+{'dataset': 'kadid10k', 'encoder': 'dinov2', 'variant': 'canon', 'dim': 2048, 'srocc': 0.5094, 'published': None}
+{'dataset': 'kadid10k', 'encoder': 'dinov2', 'variant': 'main', 'dim': 4096, 'srocc': 0.5302, 'published': None}
+{'dataset': 'kadid10k', 'encoder': 'mae', 'variant': 'canon', 'dim': 2048, 'srocc': 0.7902, 'published': None}
+{'dataset': 'kadid10k', 'encoder': 'mae', 'variant': 'main', 'dim': 4096, 'srocc': 0.7841, 'published': None}
+{'dataset': 'kadid10k', 'encoder': 'resnet50', 'variant': 'main', 'dim': 4096, 'srocc': 0.6814, 'published': None}
+{'dataset': 'koniq10k', 'encoder': 'arniqa', 'variant': 'main', 'dim': 4096, 'srocc': 0.8667, 'published': None}
+{'dataset': 'koniq10k', 'encoder': 'arniqa', 'variant': 'proj', 'dim': 256, 'srocc': 0.8332, 'published': None}
+{'dataset': 'koniq10k', 'encoder': 'clip', 'variant': 'canon', 'dim': 768, 'srocc': 0.831, 'published': None}
+{'dataset': 'koniq10k', 'encoder': 'clip', 'variant': 'main', 'dim': 1536, 'srocc': 0.8939, 'published': None}
+{'dataset': 'koniq10k', 'encoder': 'contrique', 'variant': 'main', 'dim': 4096, 'srocc': 0.8823, 'published': 0.894}
+{'dataset': 'koniq10k', 'encoder': 'dinov2', 'variant': 'canon', 'dim': 2048, 'srocc': 0.7965, 'published': None}
+{'dataset': 'koniq10k', 'encoder': 'dinov2', 'variant': 'main', 'dim': 4096, 'srocc': 0.8608, 'published': None}
+{'dataset': 'koniq10k', 'encoder': 'mae', 'variant': 'canon', 'dim': 2048, 'srocc': 0.8802, 'published': None}
+{'dataset': 'koniq10k', 'encoder': 'mae', 'variant': 'main', 'dim': 4096, 'srocc': 0.8938, 'published': None}
+{'dataset': 'koniq10k', 'encoder': 'resnet50', 'variant': 'main', 'dim': 4096, 'srocc': 0.8586, 'published': None}
+{'dataset': 'livec', 'encoder': 'arniqa', 'variant': 'main', 'dim': 4096, 'srocc': 0.7521, 'published': None}
+{'dataset': 'livec', 'encoder': 'arniqa', 'variant': 'proj', 'dim': 256, 'srocc': 0.7366, 'published': None}
+{'dataset': 'livec', 'encoder': 'clip', 'variant': 'canon', 'dim': 768, 'srocc': 0.7693, 'published': None}
+{'dataset': 'livec', 'encoder': 'clip', 'variant': 'main', 'dim': 1536, 'srocc': 0.861, 'published': None}
+{'dataset': 'livec', 'encoder': 'contrique', 'variant': 'main', 'dim': 4096, 'srocc': 0.8145, 'published': 0.845}
+{'dataset': 'livec', 'encoder': 'dinov2', 'variant': 'canon', 'dim': 2048, 'srocc': 0.7008, 'published': None}
+{'dataset': 'livec', 'encoder': 'dinov2', 'variant': 'main', 'dim': 4096, 'srocc': 0.7427, 'published': None}
+{'dataset': 'livec', 'encoder': 'mae', 'variant': 'canon', 'dim': 2048, 'srocc': 0.7601, 'published': None}
+{'dataset': 'livec', 'encoder': 'mae', 'variant': 'main', 'dim': 4096, 'srocc': 0.8052, 'published': None}
+{'dataset': 'livec', 'encoder': 'resnet50', 'variant': 'main', 'dim': 4096, 'srocc': 0.747, 'published': None}
+{'dataset': 'spaq', 'encoder': 'arniqa', 'variant': 'main', 'dim': 4096, 'srocc': 0.8971, 'published': 0.905}
+{'dataset': 'spaq', 'encoder': 'arniqa', 'variant': 'proj', 'dim': 256, 'srocc': 0.8844, 'published': None}
+{'dataset': 'spaq', 'encoder': 'clip', 'variant': 'canon', 'dim': 768, 'srocc': 0.8818, 'published': None}
+{'dataset': 'spaq', 'encoder': 'clip', 'variant': 'main', 'dim': 1536, 'srocc': 0.9036, 'published': None}
+{'dataset': 'spaq', 'encoder': 'contrique', 'variant': 'main', 'dim': 4096, 'srocc': 0.8971, 'published': 0.914}
+{'dataset': 'spaq', 'encoder': 'dinov2', 'variant': 'canon', 'dim': 2048, 'srocc': 0.8592, 'published': None}
+{'dataset': 'spaq', 'encoder': 'dinov2', 'variant': 'main', 'dim': 4096, 'srocc': 0.8874, 'published': None}
+{'dataset': 'spaq', 'encoder': 'mae', 'variant': 'canon', 'dim': 2048, 'srocc': 0.897, 'published': None}
+{'dataset': 'spaq', 'encoder': 'mae', 'variant': 'main', 'dim': 4096, 'srocc': 0.9045, 'published': None}
+{'dataset': 'spaq', 'encoder': 'resnet50', 'variant': 'main', 'dim': 4096, 'srocc': 0.8819, 'published': None}
+{'dataset': 'tid2013', 'encoder': 'arniqa', 'variant': 'main', 'dim': 4096, 'srocc': 0.8811, 'published': 0.88}
+{'dataset': 'tid2013', 'encoder': 'arniqa', 'variant': 'proj', 'dim': 256, 'srocc': 0.8457, 'published': None}
+{'dataset': 'tid2013', 'encoder': 'clip', 'variant': 'canon', 'dim': 768, 'srocc': 0.7498, 'published': None}
+{'dataset': 'tid2013', 'encoder': 'clip', 'variant': 'main', 'dim': 1536, 'srocc': 0.737, 'published': None}
+{'dataset': 'tid2013', 'encoder': 'contrique', 'variant': 'main', 'dim': 4096, 'srocc': 0.7351, 'published': 0.843}
+{'dataset': 'tid2013', 'encoder': 'dinov2', 'variant': 'canon', 'dim': 2048, 'srocc': 0.4979, 'published': None}
+{'dataset': 'tid2013', 'encoder': 'dinov2', 'variant': 'main', 'dim': 4096, 'srocc': 0.6031, 'published': None}
+{'dataset': 'tid2013', 'encoder': 'mae', 'variant': 'canon', 'dim': 2048, 'srocc': 0.4755, 'published': None}
+{'dataset': 'tid2013', 'encoder': 'mae', 'variant': 'main', 'dim': 4096, 'srocc': 0.6111, 'published': None}
+{'dataset': 'tid2013', 'encoder': 'resnet50', 'variant': 'main', 'dim': 4096, 'srocc': 0.5495, 'published': None}
+
+ dataset             csiq  kadid10k  koniq10k  livec   spaq  tid2013
+encoder   variant                                                  
+arniqa    main     0.954     0.920     0.867  0.752  0.897    0.881
+          proj     0.951     0.914     0.833  0.737  0.884    0.846
+clip      canon    0.799     0.840     0.831  0.769  0.882    0.750
+          main     0.870     0.871     0.894  0.861  0.904    0.737
+contrique main     0.921     0.932     0.882  0.814  0.897    0.735
+dinov2    canon    0.491     0.509     0.796  0.701  0.859    0.498
+          main     0.654     0.530     0.861  0.743  0.887    0.603
+mae       canon    0.753     0.790     0.880  0.760  0.897    0.476
+          main     0.757     0.784     0.894  0.805  0.904    0.611
+resnet50  main     0.641     0.681     0.859  0.747  0.882    0.550

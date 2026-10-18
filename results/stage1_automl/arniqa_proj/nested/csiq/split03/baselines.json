@@ -1,0 +1,229 @@
+{
+ "job": {
+  "fs": "arniqa_proj",
+  "protocol": "nested",
+  "ds": "csiq",
+  "split": 3
+ },
+ "baselines": {
+  "ridge_arniqa": {
+   "inner": 0.9516502421495201,
+   "cfg": {
+    "family": "global_krr_lin",
+    "w": {
+     "arniqa": 1.0,
+     "contrique": 0.0,
+     "resnet50": 0.0,
+     "dinov2": 0.0,
+     "clip": 0.0,
+     "mae": 0.0
+    },
+    "lam": 0.31622776601683794
+   },
+   "test": {
+    "srocc": 0.9545655685685083,
+    "krcc": 0.817931331502297,
+    "plcc": 0.968202076705835,
+    "plcc_raw": 0.9681307699683386,
+    "rmse": 0.0621030242186501,
+    "logistic_ok": true
+   }
+  },
+  "ridge_contrique": {
+   "inner": 0.9390453338274412,
+   "cfg": {
+    "family": "global_krr_lin",
+    "w": {
+     "arniqa": 0.0,
+     "contrique": 1.0,
+     "resnet50": 0.0,
+     "dinov2": 0.0,
+     "clip": 0.0,
+     "mae": 0.0
+    },
+    "lam": 0.1
+   },
+   "test": {
+    "srocc": 0.9386980578942815,
+    "krcc": 0.7925247801415979,
+    "plcc": 0.9592725630800594,
+    "plcc_raw": 0.958127759029284,
+    "rmse": 0.07012445449496336,
+    "logistic_ok": true
+   }
+  },
+  "ridge_resnet50": {
+   "inner": 0.8556187414436464,
+   "cfg": {
+    "family": "global_krr_lin",
+    "w": {
+     "arniqa": 0.0,
+     "contrique": 0.0,
+     "resnet50": 1.0,
+     "dinov2": 0.0,
+     "clip": 0.0,
+     "mae": 0.0
+    },
+    "lam": 0.1
+   },
+   "test": {
+    "srocc": 0.809572217494808,
+    "krcc": 0.6197336271701418,
+    "plcc": 0.8614986485888384,
+    "plcc_raw": 0.8567033076273891,
+    "rmse": 0.12604827183493386,
+    "logistic_ok": true
+   }
+  },
+  "ridge_dinov2": {
+   "inner": 0.7626580638748963,
+   "cfg": {
+    "family": "global_krr_lin",
+    "w": {
+     "arniqa": 0.0,
+     "contrique": 0.0,
+     "resnet50": 0.0,
+     "dinov2": 1.0,
+     "clip": 0.0,
+     "mae": 0.0
+    },
+    "lam": 0.31622776601683794
+   },
+   "test": {
+    "srocc": 0.5887972938356268,
+    "krcc": 0.4299160942292119,
+    "plcc": 0.7216668690575316,
+    "plcc_raw": 0.7138318763020474,
+    "rmse": 0.17184446215890664,
+    "logistic_ok": true
+   }
+  },
+  "ridge_clip": {
+   "inner": 0.901823333957245,
+   "cfg": {
+    "family": "global_krr_lin",
+    "w": {
+     "arniqa": 0.0,
+     "contrique": 0.0,
+     "resnet50": 0.0,
+     "dinov2": 0.0,
+     "clip": 1.0,
+     "mae": 0.0
+    },
+    "lam": 0.31622776601683794
+   },
+   "test": {
+    "srocc": 0.9174783519248002,
+    "krcc": 0.749027700063333,
+    "plcc": 0.9442945982405444,
+    "plcc_raw": 0.9424748389936094,
+    "rmse": 0.08169739668085811,
+    "logistic_ok": true
+   }
+  },
+  "ridge_mae": {
+   "inner": 0.857046435588753,
+   "cfg": {
+    "family": "global_krr_lin",
+    "w": {
+     "arniqa": 0.0,
+     "contrique": 0.0,
+     "resnet50": 0.0,
+     "dinov2": 0.0,
+     "clip": 0.0,
+     "mae": 1.0
+    },
+    "lam": 0.0001
+   },
+   "test": {
+    "srocc": 0.7919346894788434,
+    "krcc": 0.6000468753304377,
+    "plcc": 0.8173786578266881,
+    "plcc_raw": 0.8148758483255806,
+    "rmse": 0.14301348986241927,
+    "logistic_ok": true
+   }
+  },
+  "ridge_concat": {
+   "inner": 0.947624797302324,
+   "cfg": {
+    "family": "global_krr_lin",
+    "w": {
+     "arniqa": 1.0,
+     "contrique": 1.0,
+     "resnet50": 1.0,
+     "dinov2": 1.0,
+     "clip": 1.0,
+     "mae": 1.0
+    },
+    "lam": 0.31622776601683794
+   },
+   "test": {
+    "srocc": 0.9441425127807078,
+    "krcc": 0.7965153379469433,
+    "plcc": 0.9648582387377898,
+    "plcc_raw": 0.964853566706148,
+    "rmse": 0.0652312800293219,
+    "logistic_ok": true
+   }
+  },
+  "knn_mean_concat": {
+   "inner": 0.9549667854640719,
+   "cfg": {
+    "family": "nw",
+    "w": {
+     "arniqa": 1.0,
+     "contrique": 1.0,
+     "resnet50": 1.0,
+     "dinov2": 1.0,
+     "clip": 1.0,
+     "mae": 1.0
+    },
+    "K": 5,
+    "gamma": 0.0
+   },
+   "test": {
+    "srocc": 0.9363702065054562,
+    "krcc": 0.7787648222639869,
+    "plcc": 0.958982856207268,
+    "plcc_raw": 0.9587639409408603,
+    "rmse": 0.07036821796496286,
+    "logistic_ok": true
+   }
+  },
+  "local_krr_default": {
+   "inner": 0.9619578830004171,
+   "cfg": {
+    "family": "local_krr_rbf",
+    "w": {
+     "arniqa": 1.0,
+     "contrique": 1.0,
+     "resnet50": 1.0,
+     "dinov2": 1.0,
+     "clip": 1.0,
+     "mae": 1.0
+    },
+    "K": 50,
+    "gamma": 1.0,
+    "lam": 0.1,
+    "center": true
+   },
+   "test": {
+    "srocc": 0.9544949501160065,
+    "krcc": 0.8196605732179467,
+    "plcc": 0.9725021679085469,
+    "plcc_raw": 0.9722792521131597,
+    "rmse": 0.05781446352349998,
+    "logistic_ok": true
+   }
+  }
+ },
+ "seconds": 2.858550548553467,
+ "env": {
+  "torch": "2.11.0+cu130",
+  "cuda": "13.0",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "host": "3bdd63fd108a",
+  "pid": 59967
+ }
+}

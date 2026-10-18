@@ -1,0 +1,200 @@
+{
+ "bench": {
+  "kadid10k": {
+   "n": 10125,
+   "bank_s": 0.5193920135498047,
+   "fold_eval_s": {
+    "nw": 0.0031896779998987768,
+    "local_krr_lin": 0.007310157500000969,
+    "local_krr_rbf": 0.01053255400006492,
+    "lwlr": 0.034827130499934356,
+    "global_krr_lin": 0.02250265399993623,
+    "global_krr_rbf": 0.024639987499995186
+   },
+   "fold_eval_mean_s": 0.017167026916638406,
+   "peak_gb": 5.827500032
+  },
+  "csiq": {
+   "n": 866,
+   "bank_s": 0.02208566665649414,
+   "fold_eval_s": {
+    "nw": 0.0017286204999891197,
+    "local_krr_lin": 0.0030008735000137676,
+    "local_krr_rbf": 0.003671710500043446,
+    "lwlr": 0.006184490000009646,
+    "global_krr_lin": 0.0025948509999125235,
+    "global_krr_rbf": 0.0027113579999422655
+   },
+   "fold_eval_mean_s": 0.003315317249985128,
+   "peak_gb": 5.827500032
+  },
+  "tid2013": {
+   "n": 3000,
+   "bank_s": 0.06407284736633301,
+   "fold_eval_s": {
+    "nw": 0.001643872999920859,
+    "local_krr_lin": 0.003149767999843789,
+    "local_krr_rbf": 0.004936676999932388,
+    "lwlr": 0.012369099000011374,
+    "global_krr_lin": 0.0038996015000520856,
+    "global_krr_rbf": 0.003955073999918568
+   },
+   "fold_eval_mean_s": 0.004992348749946511,
+   "peak_gb": 5.827500032
+  },
+  "koniq10k": {
+   "n": 10073,
+   "bank_s": 0.20174884796142578,
+   "fold_eval_s": {
+    "nw": 0.0032193739999684112,
+    "local_krr_lin": 0.006305605000079595,
+    "local_krr_rbf": 0.013841526000078375,
+    "lwlr": 0.04822174549997271,
+    "global_krr_lin": 0.022763843999996425,
+    "global_krr_rbf": 0.024685874500050886
+   },
+   "fold_eval_mean_s": 0.019839661500024402,
+   "peak_gb": 5.827500032
+  },
+  "livec": {
+   "n": 1162,
+   "bank_s": 0.027808427810668945,
+   "fold_eval_s": {
+    "nw": 0.0016964525001412767,
+    "local_krr_lin": 0.003201387999979488,
+    "local_krr_rbf": 0.003867409500003305,
+    "lwlr": 0.0074403449999635995,
+    "global_krr_lin": 0.002782083500051158,
+    "global_krr_rbf": 0.0029079794999233854
+   },
+   "fold_eval_mean_s": 0.003649276333343702,
+   "peak_gb": 5.827500032
+  },
+  "spaq": {
+   "n": 11125,
+   "bank_s": 0.22517848014831543,
+   "fold_eval_s": {
+    "nw": 0.0036896925000746705,
+    "local_krr_lin": 0.0070134904999576975,
+    "local_krr_rbf": 0.015407226500087745,
+    "lwlr": 0.0561638755000331,
+    "global_krr_lin": 0.027355343999943216,
+    "global_krr_rbf": 0.029705632999935006
+   },
+   "fold_eval_mean_s": 0.023222543666671907,
+   "peak_gb": 6.930737152
+  }
+ },
+ "optuna_overhead_s": 0.015478885173797608,
+ "projection_s": {
+  "stage1": 12321.992971717758,
+  "stage2": 22871.73082954213,
+  "stage3": 137.1537313915591,
+  "per_dataset": {
+   "kadid10k": {
+    "stage1_h": 0.7589252252505172,
+    "stage2_h": 1.4183962765978548,
+    "stage3_h": 0.009060375317114714
+   },
+   "csiq": {
+    "stage1_h": 0.25064443442693435,
+    "stage2_h": 0.4487765999321255,
+    "stage3_h": 0.0017497507708254842
+   },
+   "tid2013": {
+    "stage1_h": 0.31218217363385065,
+    "stage2_h": 0.5661688049294223,
+    "stage3_h": 0.002634850729138436
+   },
+   "koniq10k": {
+    "stage1_h": 0.8569960664908756,
+    "stage2_h": 1.6054806974348748,
+    "stage3_h": 0.01047093245834621
+   },
+   "livec": {
+    "stage1_h": 0.2628988774579531,
+    "stage2_h": 0.4721537357672257,
+    "stage3_h": 0.0019260069537091762
+   },
+   "spaq": {
+    "stage1_h": 0.9811290482170241,
+    "stage2_h": 1.8422824491002001,
+    "stage3_h": 0.012256342490743505
+   }
+  }
+ },
+ "env": {
+  "torch": "2.11.0+cu130",
+  "cuda": "13.0",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "host": "8014b9b9010d",
+  "pid": 6187
+ },
+ "config": {
+  "protocol": {
+   "seed": 2026,
+   "n_outer": 10,
+   "outer_test_frac": 0.2,
+   "n_inner_folds": 5,
+   "n_holdout": 10,
+   "holdout_fracs": [
+    0.7,
+    0.1,
+    0.2
+   ],
+   "holdout_refit_on_train_val": true
+  },
+  "stage1": {
+   "strategies": [
+    "random",
+    "lhs_sh",
+    "tpe",
+    "tpe_hb"
+   ],
+   "budget_fold_evals": 1500,
+   "holdout_budget_evals": 300,
+   "anytime_points": [
+    0.02,
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.5,
+    0.75,
+    1.0
+   ],
+   "ablation_featuresets": [
+    "canon",
+    "arniqa_proj"
+   ],
+   "ablation_strategy": "tpe_hb"
+  },
+  "stage2": {
+   "strategy": "tpe_hb",
+   "budget_fold_evals": 400,
+   "outer_splits": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "featureset": "main"
+  },
+  "stage3": {
+   "strategy": "tpe_hb",
+   "budget_fold_evals": 1500,
+   "featureset": "main"
+  },
+  "runtime": {
+   "workers_per_gpu": 6,
+   "torch_threads": 2,
+   "local_chunk_elems": 200000000
+  }
+ }
+}

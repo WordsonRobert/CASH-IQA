@@ -1,0 +1,25 @@
+/content/CASH-IQA/code/s0_prepare.py:71: ExperimentalWarning: Argument ``group`` is an experimental feature. The interface can change in the future.
+  st = optuna.create_study(direction="maximize", sampler=optuna.samplers.TPESampler(seed=0, multivariate=True, group=True))
+config=/content/CASH-IQA/code/config.yaml device=cuda NVIDIA A100-SXM4-80GB
+  kadid10k  N=10125 groups=   81 outer test=2000 holdout test=2000 dims={'arniqa:proj': 256, 'arniqa:main': 4096, 'contrique:main': 4096, 'resnet50:main': 4096, 'dinov2:main': 4096, 'dinov2:canon': 2048, 'clip:main': 1536, 'clip:canon': 768, 'mae:main': 4096, 'mae:canon': 2048}
+  csiq      N=  866 groups=   30 outer test=174 holdout test=173 dims={'arniqa:proj': 256, 'arniqa:main': 4096, 'contrique:main': 4096, 'resnet50:main': 4096, 'dinov2:main': 4096, 'dinov2:canon': 2048, 'clip:main': 1536, 'clip:canon': 768, 'mae:main': 4096, 'mae:canon': 2048}
+  tid2013   N= 3000 groups=   25 outer test=600 holdout test=600 dims={'arniqa:proj': 256, 'arniqa:main': 4096, 'contrique:main': 4096, 'resnet50:main': 4096, 'dinov2:main': 4096, 'dinov2:canon': 2048, 'clip:main': 1536, 'clip:canon': 768, 'mae:main': 4096, 'mae:canon': 2048}
+  koniq10k  N=10073 groups=10073 outer test=2015 holdout test=2015 dims={'arniqa:proj': 256, 'arniqa:main': 4096, 'contrique:main': 4096, 'resnet50:main': 4096, 'dinov2:main': 4096, 'dinov2:canon': 2048, 'clip:main': 1536, 'clip:canon': 768, 'mae:main': 4096, 'mae:canon': 2048}
+  livec     N= 1162 groups= 1162 outer test=232 holdout test=232 dims={'arniqa:proj': 256, 'arniqa:main': 4096, 'contrique:main': 4096, 'resnet50:main': 4096, 'dinov2:main': 4096, 'dinov2:canon': 2048, 'clip:main': 1536, 'clip:canon': 768, 'mae:main': 4096, 'mae:canon': 2048}
+  spaq      N=11125 groups=11125 outer test=2225 holdout test=2225 dims={'arniqa:proj': 256, 'arniqa:main': 4096, 'contrique:main': 4096, 'resnet50:main': 4096, 'dinov2:main': 4096, 'dinov2:canon': 2048, 'clip:main': 1536, 'clip:canon': 768, 'mae:main': 4096, 'mae:canon': 2048}
+  bench kadid10k  bank 0.52s peak 5.8 GB | per fold-eval: nw=3ms local_krr_lin=7ms local_krr_rbf=11ms lwlr=35ms global_krr_lin=23ms global_krr_rbf=25ms
+  bench csiq      bank 0.02s peak 5.8 GB | per fold-eval: nw=2ms local_krr_lin=3ms local_krr_rbf=4ms lwlr=6ms global_krr_lin=3ms global_krr_rbf=3ms
+  bench tid2013   bank 0.06s peak 5.8 GB | per fold-eval: nw=2ms local_krr_lin=3ms local_krr_rbf=5ms lwlr=12ms global_krr_lin=4ms global_krr_rbf=4ms
+  bench koniq10k  bank 0.20s peak 5.8 GB | per fold-eval: nw=3ms local_krr_lin=6ms local_krr_rbf=14ms lwlr=48ms global_krr_lin=23ms global_krr_rbf=25ms
+  bench livec     bank 0.03s peak 5.8 GB | per fold-eval: nw=2ms local_krr_lin=3ms local_krr_rbf=4ms lwlr=7ms global_krr_lin=3ms global_krr_rbf=3ms
+  bench spaq      bank 0.23s peak 6.9 GB | per fold-eval: nw=4ms local_krr_lin=7ms local_krr_rbf=15ms lwlr=56ms global_krr_lin=27ms global_krr_rbf=30ms
+
+  optuna overhead per trial ~15 ms
+  projected single-stream GPU hours: stage1 3.4 | stage2 6.4 | stage3 0.0
+  projected wall-clock with 1 GPU(s) x 6 workers (eff 0.5): stage1 1.1 h | stage2 2.1 h | stage3 0.01 h
+    kadid10k  stage1_h=0.76 stage2_h=1.42 stage3_h=0.01
+    csiq      stage1_h=0.25 stage2_h=0.45 stage3_h=0.00
+    tid2013   stage1_h=0.31 stage2_h=0.57 stage3_h=0.00
+    koniq10k  stage1_h=0.86 stage2_h=1.61 stage3_h=0.01
+    livec     stage1_h=0.26 stage2_h=0.47 stage3_h=0.00
+    spaq      stage1_h=0.98 stage2_h=1.84 stage3_h=0.01

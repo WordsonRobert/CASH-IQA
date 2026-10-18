@@ -1,0 +1,20 @@
+# large / licensed / external
+features/*/*.h5
+features/logs/
+features/manifest.json
+features/verify_linear_probe.csv
+data/
+third_party/
+
+# run artefacts
+results/stage1_automl/**/preds.npz
+results/work/logs/
+02_automl_pipeline/_smoke/
+*.npz
+*.tmp*
+
+# python / os
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store

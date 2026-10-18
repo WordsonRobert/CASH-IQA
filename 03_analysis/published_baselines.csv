@@ -1,0 +1,17 @@
+group,method,venue,setting,protocol,aggregation,kadid10k,csiq,tid2013,koniq10k,livec,spaq,source,note
+frozen_encoder,CONTRIQUE,TIP 2022,frozen ResNet-50 + ridge,70/10/20 reference-disjoint,median of 10,0.934,0.942,0.843,0.894,0.845,0.914,https://www.arxiv.org/pdf/2110.13266,
+frozen_encoder,Re-IQA,CVPR 2023,two frozen ResNet-50 + linear,70/10/20,median of 10,0.872,0.947,0.804,0.914,0.840,0.918,https://par.nsf.gov//servlets/purl/10424957,
+frozen_encoder,ARNIQA,WACV 2024,frozen ResNet-50 + ridge,70/10/20 reference-disjoint,median of 10,0.908,0.962,0.880,,,0.905,https://openaccess.thecvf.com/content/WACV2024/papers/Agnolucci_ARNIQA_Learning_Distortion_Manifold_for_Image_Quality_Assessment_WACV_2024_paper.pdf,KonIQ/LIVEC not in main paper
+frozen_encoder,GRepQ-D,WACV 2024,frozen encoders + linear SVR,80/20,median of 100,,,,0.909,0.864,,https://eprints.iisc.ac.in/85039/2/lea_gen_per_rep_for_dat_eff_no_ref_ima_qua_ass_2024.pdf,supplementary Table 8
+frozen_encoder,TRIQA,arXiv 2025,frozen ConvNeXt + LinearSVR,80/20,median of 10,,,,0.915,0.837,0.911,https://arxiv.org/html/2507.12687v1,preprint
+frozen_encoder,SLIQUE,2024 (venue unconfirmed),frozen encoder + ridge,70/10/20,MEAN of 10,0.957,0.966,0.884,0.916,0.897,0.921,https://arxiv.org/html/2406.09858v3,reports mean not median
+frozen_encoder,SHAMISA,arXiv 2026,frozen + ridge,70/10/20 reference-disjoint,median of 10,0.922,0.981,0.904,,,0.914,https://arxiv.org/pdf/2603.13669,preprint; CSIQ above fine-tuned ceiling
+label_retrieval,Regression-free kNN,arXiv 2023,distortion module fine-tuned on IQA labels + kNN,8:2 reference-disjoint,median of 15,0.947,0.956,0.918,0.868,0.758,,https://ar5iv.labs.arxiv.org/html/2307.09279,not strictly training-free
+label_retrieval,IQARAG (Kimi-VL),arXiv 2026,LMM + retrieved MOS examples (no training),3:7 reference pool,not stated,0.736,,,0.908,0.847,0.843,https://arxiv.org/html/2601.08311v1,
+no_labels,QUASAR,IEEE Access 2024,frozen embeddings + anchor centroids (no MOS),not stated,not stated,0.670,,0.627,0.688,0.637,0.769,https://ar5iv.labs.arxiv.org/html/2403.06866,SRCC only
+no_labels,CLIP-IQA,AAAI 2023,zero-shot CLIP prompts,official KonIQ split / whole sets,single,,,0.51,0.695,0.612,0.738,https://ar5iv.labs.arxiv.org/html/2207.12396,TID2013 from appendix
+no_labels,QualiCLIP,arXiv 2025,CLIP fine-tuned with no MOS,70/10/20,median of 10,0.654,0.804,0.651,0.817,0.725,0.841,https://arxiv.org/html/2403.11176,synthetic values as reported in HiRQA
+no_labels,HiRQA,arXiv 2025,ResNet-50 trained on KADIS without MOS,whole sets,single,0.761,0.862,0.679,0.802,0.692,0.859,https://arxiv.org/html/2508.15130v1,
+fine_tuned_ceiling,Gamma-T,ACM MM 2025,per-dataset fine-tuned CLIP-B/16,80/20,median of 10,0.960,0.973,0.944,0.945,0.899,0.928,https://arxiv.org/pdf/2503.06678,
+fine_tuned_ceiling,DR.Experts,AAAI 2026,fine-tuned DeiT-III-S + frozen DA-CLIP,80/20,median of 10,,,,0.941,0.914,0.928,https://arxiv.org/pdf/2602.09531,
+fine_tuned_ceiling,Q-Align,ICML 2024,fine-tuned mPLUG-Owl2 (7B),fixed split,single,0.919,,,0.940,,0.930,https://arxiv.org/html/2312.17090v1,LIVEC only cross-dataset

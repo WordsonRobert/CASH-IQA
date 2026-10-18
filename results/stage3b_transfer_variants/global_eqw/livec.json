@@ -1,0 +1,75 @@
+{
+ "job": {
+  "src": "livec",
+  "variant": "global_eqw"
+ },
+ "families": [
+  "global_krr_lin",
+  "global_krr_rbf"
+ ],
+ "equal_weights": true,
+ "selected": {
+  "family": "global_krr_rbf",
+  "w": {
+   "arniqa": 1.0,
+   "contrique": 1.0,
+   "resnet50": 1.0,
+   "dinov2": 1.0,
+   "clip": 1.0,
+   "mae": 1.0
+  },
+  "gamma": 0.7878098076442238,
+  "lam": 0.004222151943873277
+ },
+ "inner": 0.893867094377676,
+ "search_seconds": 73.93762588500977,
+ "targets": {
+  "kadid10k": {
+   "srocc": 0.7676047824100773,
+   "krcc": 0.5706051536737058,
+   "plcc": 0.773388172326994,
+   "plcc_raw": 0.7554647885970016,
+   "rmse": 0.68631217748147,
+   "logistic_ok": true
+  },
+  "csiq": {
+   "srocc": 0.8223014827218347,
+   "krcc": 0.6253456533012097,
+   "plcc": 0.8385002673862824,
+   "plcc_raw": 0.83178719424893,
+   "rmse": 0.1430545969707762,
+   "logistic_ok": true
+  },
+  "tid2013": {
+   "srocc": 0.654076232994469,
+   "krcc": 0.47205420499462103,
+   "plcc": 0.7194543012575021,
+   "plcc_raw": 0.7192469621995051,
+   "rmse": 0.8610023734498461,
+   "logistic_ok": true
+  },
+  "koniq10k": {
+   "srocc": 0.8371780111116223,
+   "krcc": 0.64288494882535,
+   "plcc": 0.8564221196170583,
+   "plcc_raw": 0.847319938701137,
+   "rmse": 0.2835787969773182,
+   "logistic_ok": true
+  },
+  "spaq": {
+   "srocc": 0.8497333527362038,
+   "krcc": 0.6440059763435526,
+   "plcc": 0.8569771294624646,
+   "plcc_raw": 0.8381050186113326,
+   "rmse": 10.771606430317904,
+   "logistic_ok": true
+  }
+ },
+ "env": {
+  "torch": "2.11.0+cu130",
+  "cuda": "13.0",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "host": "c5c96ad451ba",
+  "pid": 224235
+ }
+}

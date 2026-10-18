@@ -1,0 +1,10 @@
+# 02_automl_pipeline + 03_analysis   (feature extraction has its own: 01_feature_extraction/requirements.txt)
+torch>=2.1
+numpy
+scipy
+pandas
+h5py
+pyyaml
+optuna>=3.4
+tabulate
+matplotlib

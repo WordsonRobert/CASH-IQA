@@ -1,0 +1,57 @@
+# CASH-IQA -- pipeline configuration (the settings of the reported experiments).
+# Do not edit the protocol: section: the frozen splits in results/work/ were generated from it.
+
+paths:                      # relative to this file
+  features: ../features       # {dataset}/{encoder}.h5 from 01_feature_extraction (not in git) + meta.csv (in git)
+  work: ../results/work       # frozen splits (splits.json per dataset) + plan.json + job logs
+  results: ../results         # stage1_automl/ stage2_shapley/ stage3_cross_dataset/ stage3b_transfer_variants/ tables/
+
+datasets: [kadid10k, csiq, tid2013, koniq10k, livec, spaq]   # LIVE IQA excluded (no licence)
+encoders: [arniqa, contrique, resnet50, dinov2, clip, mae]
+
+# feature variant per encoder (anything not listed uses 'main')
+featuresets:
+  main: {}
+  canon: {dinov2: canon, clip: canon, mae: canon}   # canonical single view vs native-res 5-crop x 2-scale
+  arniqa_proj: {arniqa: proj}                        # ARNIQA projector embedding: 128-d per scale, 256-d over [full|half] 
+
+protocol:
+  seed: 2026
+  n_outer: 10              # nested protocol: 10 x 80/20 outer splits (reference-grouped for synthetic sets)
+  outer_test_frac: 0.20
+  n_inner_folds: 5         # grouped K-fold inside the outer-train part: ALL search happens here
+  n_holdout: 10            # second protocol: 10 x 70/10/20 (select on val, test once)
+  holdout_fracs: [0.70, 0.10, 0.20]
+  holdout_refit_on_train_val: true   # after selecting on val, the gallery for test = train + val
+
+search_space:
+  families: [nw, local_krr_lin, local_krr_rbf, lwlr, global_krr_lin, global_krr_rbf]
+  w: [0.0, 1.0]            # every encoder weight free (no anchor); fused kernel = sum w^2 S_e / sum w^2
+  K: [5, 200]              # log-uniform integer, local families only
+  log10_gamma: [-2.0, 2.0]
+  log10_lambda: [-4.0, 2.0]
+  center: [false, true]    # local KRR: regress residuals around the neighbourhood mean
+
+stage1:                    # AutoML (CASH) benchmark + headline numbers
+  strategies: [random, lhs_sh, tpe, tpe_hb]
+  budget_fold_evals: 1500  # per strategy per outer split  (= 300 full 5-fold evaluations)
+  holdout_budget_evals: 300
+  anytime_points: [0.02, 0.05, 0.1, 0.2, 0.3, 0.5, 0.75, 1.0]
+  ablation_featuresets: [canon, arniqa_proj]   # run with ablation_strategy only (nested protocol)
+  ablation_strategy: tpe_hb
+
+stage2:                    # exact Shapley attribution over all 2^E - 1 encoder subsets
+  strategy: tpe_hb
+  budget_fold_evals: 800    # per encoder subset per outer split (checked: matches stage 1 at 1500 within 0.004)
+  outer_splits: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  featureset: main
+
+stage3:                    # cross-dataset: select on the source by grouped CV, test on every other dataset
+  strategy: tpe_hb
+  budget_fold_evals: 1500
+  featureset: main
+
+runtime:
+  workers_per_gpu: 6       # concurrent jobs per GPU (each holds one dataset's 6 Gram matrices, <= 3 GB)
+  torch_threads: 2
+  local_chunk_elems: 200000000   # max elements per neighbour-Gram chunk (memory knob)
