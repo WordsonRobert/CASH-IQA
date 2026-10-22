@@ -5,6 +5,7 @@ Parallel, resumable job launcher.
     python run_jobs.py --stage 1                       # all GPUs, workers_per_gpu from config.yaml
     python run_jobs.py --stage 2 --gpus 0,1 --workers-per-gpu 8
     python run_jobs.py --stage 1 --datasets csiq livec --dry
+    python run_jobs.py --stage 5      # attribution without re-tuning;  --stage 6: transfer shrinkage
 
 Every job writes its own output; finished jobs are skipped, so it is safe to Ctrl-C and rerun.
 Biggest datasets are scheduled first. Logs: work/logs/stage{N}/{job}.log
@@ -16,12 +17,13 @@ from core import load_config
 import importlib
 
 SIZE = {"spaq": 11125, "kadid10k": 10125, "koniq10k": 10073, "tid2013": 3000, "livec": 1162, "csiq": 866, "live": 779}
-MOD = {1: "stage1_automl_benchmark", 2: "stage2_shapley_attribution", 3: "stage3_cross_dataset", 4: "stage3b_transfer_variants"}
+MOD = {1: "stage1_automl_benchmark", 2: "stage2_shapley_attribution", 3: "stage3_cross_dataset", 4: "stage3b_transfer_variants",
+       5: "stage5_noretune_shapley", 6: "stage6_transfer_shrinkage"}
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--stage", type=int, required=True, choices=[1, 2, 3, 4])
+    ap.add_argument("--stage", type=int, required=True, choices=[1, 2, 3, 4, 5, 6])
     ap.add_argument("--config", default=None)
     ap.add_argument("--gpus", default=None, help="comma list, default: all visible")
     ap.add_argument("--workers-per-gpu", type=int, default=None)

@@ -84,11 +84,26 @@ The gap to per-dataset fine-tuned models is 0.005–0.022 SROCC, with zero train
    - On authentic photographs, CLIP carries it ([fig. 4](figures/fig4_shapley_fusion_gain.pdf)).
    - ARNIQA × CONTRIQUE is the strongest redundancy. Distortion-aware × semantic pairs are synergistic
      ([fig. 5](figures/fig5_shapley_interactions.pdf)).
-3. **Transfer is limited by source-specific fusion weights.** In cross-dataset tests, fixing the weights equal
-   recovers 83% of the deficit relative to ridge, and equal weights with global kernels match ridge (0.739 vs
-   0.742 mean SROCC over 30 source–target pairs) ([fig. 7](figures/fig7_transfer_decomposition.pdf)).
-   *Practical rule:* tune the weights when the deployment domain is known, and fix them equal when it is not.
-4. **Failures are systematic.** Mean shift, colour saturation, block/patch substitution and contrast change
+3. **The attribution ranking does not need re-tuning; its magnitudes do.**
+   - Scoring every subset with the selected model held fixed (inactive encoders' weights set to zero, nothing
+     re-searched) costs 0.47 instead of 56.4 GPU worker-hours (×121).
+   - Its Shapley ranking agrees with the exact re-tuned one (Spearman ≥ 0.9) on 5 of 6 datasets, a criterion
+     fixed before the run, and the two most valuable encoders are identical on all six. The version computed on
+     inner-CV scores, which uses no test data, agrees equally well.
+   - Magnitudes are inflated 1.1–1.9×, most on synthetic data: weak encoders scored alone with hyperparameters
+     tuned for the fused kernel do much worse than when re-tuned ([fig. 10](figures/fig10_noretune_vs_exact_shapley.pdf)).
+4. **Transfer is limited by source-specific fusion weights and by hyperparameters tuned jointly with them.**
+   - In cross-dataset tests, re-searching with equal weights recovers 83% of the deficit relative to ridge, and
+     equal weights with global kernels match ridge (0.739 vs 0.742 mean SROCC over 30 source–target pairs)
+     ([fig. 7](figures/fig7_transfer_decomposition.pdf)).
+   - Shrinking an already-tuned model's weights toward equal, with the amount chosen leave-one-dataset-out,
+     selects full equal weights for every target but recovers only 64% (0.709); it does not meet the
+     pre-registered criterion of matching ridge within 0.010 ([fig. 11](figures/fig11_transfer_shrinkage.pdf)).
+   - In-domain, shrinking costs up to 0.06 SROCC (TID2013), and inner CV itself prefers the tuned weights on
+     58 of 60 splits.
+   - *Practical rule:* tune the weights when the deployment domain is known; when it is not, search with equal
+     weights and global kernels from the start rather than shrinking a tuned model afterwards.
+5. **Failures are systematic.** Mean shift, colour saturation, block/patch substitution and contrast change
    are the hardest distortions on both KADID-10k and TID2013
    ([fig. 8](figures/fig8_per_distortion.pdf)). All of them preserve image content, which similarity-based
    prediction cannot resolve.
@@ -122,6 +137,8 @@ CASH-IQA/
 │   ├── stage3b_transfer_variants.py transfer decomposition: global-only / equal-weight / both
 │   ├── stage3b_summary.py           -> results/tables/cross_transfer.csv
 │   ├── stage4_analysis.py           statistics -> results/tables/*.csv + results/report_stage4.md
+│   ├── stage5_noretune_shapley.py   every encoder subset scored with the selected model held fixed (no re-tuning)
+│   ├── stage6_transfer_shrinkage.py tuned fusion weights shrunk toward equal: cross-dataset + in-domain
 │   ├── run_jobs.py                  parallel, resumable GPU job launcher
 │   ├── run_all.sh · status.sh · smoke_test.sh
 │   └── RUN_ON_COLAB.md              running the full experiment on a Colab A100
@@ -130,19 +147,24 @@ CASH-IQA/
 │   ├── sanity_checks.py             completeness, budget accounting, budget adequacy, NaNs
 │   ├── shapley_fusion_gain.py       Shapley values / interactions of the fusion gain, bootstrap CIs
 │   ├── compare_published.py         comparison with published methods (+ published_baselines.csv with sources)
-│   └── make_figures.py              figures/fig1..fig9
+│   ├── noretune_shapley_check.py    stage 5 vs exact Shapley: agreement, magnitude, pre-registered verdict
+│   ├── transfer_shrinkage.py        stage 6: leave-one-dataset-out shrinkage, in-domain cost, pre-registered verdict
+│   └── make_figures.py              figures/fig1..fig11
 │
 ├── results/
 │   ├── stage1_automl/               {featureset}/{protocol}/{dataset}/split{k}/{strategy|baselines}.json   (840 files)
 │   ├── stage2_shapley/              {dataset}/split{k}.jsonl, 63 re-tuned subsets per file               (60 files)
 │   ├── stage3_cross_dataset/        {source}.json                                                         (6 files)
 │   ├── stage3b_transfer_variants/   {variant}/{source}.json                                               (18 files)
+│   ├── stage5_noretune_shapley/     {dataset}/split{k}.json, 63 subsets without re-tuning per file          (60 files)
+│   ├── stage6_transfer_shrinkage/   cross/{source}.json + indomain/{dataset}/split{k}.json, 11 alphas       (66 files)
 │   ├── tables/                      every table (CSV)
 │   ├── work/                        frozen splits (splits.json per dataset) + plan.json (GPU benchmark)
-│   ├── logs/                        stage-0 log, full run log, smoke-test log, per-job logs (tar.gz)
-│   └── report_stage4.md             auto-generated summary of all tables
+│   ├── logs/                        stage-0 log, run logs, smoke-test log, per-job logs (tar.gz)
+│   ├── report_stage4.md             auto-generated summary of the stage 1-3b tables
+│   └── report_stage5.txt · report_stage6.txt   output of the two stage-5/6 analyses (with their verdicts)
 │
-└── figures/                         fig1..fig9 (.pdf and .png)
+└── figures/                         fig1..fig11 (.pdf and .png)
 ```
 
 Each folder has its own README describing its contents and outputs.
@@ -162,6 +184,8 @@ python 03_analysis/sanity_checks.py          # PROBLEMS: none
 cd 02_automl_pipeline && python stage4_analysis.py && python stage3b_summary.py && cd ..
 python 03_analysis/shapley_fusion_gain.py
 python 03_analysis/compare_published.py
+python 03_analysis/noretune_shapley_check.py
+python 03_analysis/transfer_shrinkage.py
 python 03_analysis/make_figures.py
 ```
 
@@ -201,6 +225,10 @@ cd ../02_automl_pipeline && bash smoke_test.sh && bash run_all.sh
   - The primary strategy (TPE + Hyperband) was fixed in advance.
 - **Statistics.** Medians over splits; paired Wilcoxon tests over splits, Holm-corrected across datasets; PLCC
   after a 4-parameter logistic fit.
+- **Follow-up experiments (stages 5 and 6).** Their success criteria were written into the scripts before they
+  were run, and both are reported as they came out: stage 5 met its criterion, stage 6 did not. Neither
+  re-selects anything on test data; both reproduce the earlier stages exactly at their reference setting
+  (checked by `sanity_checks.py`).
 
 ## Citation
 

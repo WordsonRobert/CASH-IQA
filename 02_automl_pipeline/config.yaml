@@ -4,7 +4,8 @@
 paths:                      # relative to this file
   features: ../features       # {dataset}/{encoder}.h5 from 01_feature_extraction (not in git) + meta.csv (in git)
   work: ../results/work       # frozen splits (splits.json per dataset) + plan.json + job logs
-  results: ../results         # stage1_automl/ stage2_shapley/ stage3_cross_dataset/ stage3b_transfer_variants/ tables/
+  results: ../results         # stage1_automl/ stage2_shapley/ stage3_cross_dataset/ stage3b_transfer_variants/
+                              # stage5_noretune_shapley/ stage6_transfer_shrinkage/ tables/
 
 datasets: [kadid10k, csiq, tid2013, koniq10k, livec, spaq]   # LIVE IQA excluded (no licence)
 encoders: [arniqa, contrique, resnet50, dinov2, clip, mae]
@@ -50,6 +51,11 @@ stage3:                    # cross-dataset: select on the source by grouped CV, 
   strategy: tpe_hb
   budget_fold_evals: 1500
   featureset: main
+
+# stage 5 (attribution without re-tuning) and stage 6 (transfer shrinkage) have no settings of their own: they
+# re-score the stage-1 (nested, tpe_hb) and stage-3 configurations, with alpha in {0, 0.1, ..., 1} for stage 6
+# (stage6_transfer_shrinkage.ALPHAS). Their decision rules are in 03_analysis/noretune_shapley_check.py and
+# 03_analysis/transfer_shrinkage.py.
 
 runtime:
   workers_per_gpu: 6       # concurrent jobs per GPU (each holds one dataset's 6 Gram matrices, <= 3 GB)

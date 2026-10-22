@@ -75,6 +75,8 @@ scores, so a re-evaluation is free.
 | 3b | `stage3b_transfer_variants.py` (diagnostic) | (variant, source) | Same as stage 3, with restricted spaces: `global` (global families only), `eqw` (weights fixed equal), `global_eqw` (both) | `stage3b_transfer_variants/{variant}/{src}.json` | 11 min |
 | – | `stage3b_summary.py` | – | Stage 3 vs 3b by domain pair | `tables/cross_transfer.csv` | s |
 | 4 | `stage4_analysis.py` | – | Headline tables, Wilcoxon + Holm, AutoML benchmark and anytime curves, family selection, encoder weights, feature ablation, raw-game Shapley values, cross-dataset matrices, per-distortion and per-reference failures | `tables/*.csv`, `report_stage4.md` | s |
+| 5 | `stage5_noretune_shapley.py` | (dataset, split) | Attribution **without re-tuning**: the stage-1 `tpe_hb` configuration of the split is held fixed and, for each of the 63 subsets, the weights of the encoders outside the subset are set to 0. Inner-CV scores (5 folds) are computed before `freeze()`, test scores after; nothing is selected. Check: the full subset reproduces the stage-1 test and inner scores exactly | `stage5_noretune_shapley/{ds}/split{k}.json` | 5.5 min |
+| 6 | `stage6_transfer_shrinkage.py` | source (`cross`) or (dataset, split) (`indomain`) | Shrinks the selected effective weights toward equal, ω_α = (1−α) ω + α/6 with w_e = √ω_α,e, for α ∈ {0, 0.1, …, 1}; family and hyperparameters unchanged. `cross`: the stage-3 model of each source scored on all five targets. `indomain`: the stage-1 model scored on inner folds and on test. Check: α = 0 reproduces stages 3 and 1 exactly | `stage6_transfer_shrinkage/cross/{src}.json`, `…/indomain/{ds}/split{k}.json` | 2.5 min |
 
 **Baselines (`core.py::baseline_configs`).** Every baseline is tuned on the *same* inner folds by mean SROCC and
 scored once on test:
@@ -89,9 +91,9 @@ scored once on test:
 ```bash
 pip install -r requirements.txt
 bash smoke_test.sh            # CSIQ + LIVEC, 2 splits, tiny budgets: every stage end to end in ./_smoke (5-10 min)
-bash run_all.sh               # full experiment: stage 0 -> 1 -> 2 -> 3 -> 3b -> 4 -> 03_analysis   (~12 h, A100-80GB)
+bash run_all.sh               # full experiment: stage 0 -> 1 -> 2 -> 3 -> 3b -> 4 -> 5 -> 6 -> 03_analysis   (~12 h, A100-80GB)
 bash status.sh                # progress; any stage can be killed and rerun (finished jobs are skipped)
-python run_jobs.py --stage 2 --gpus 0,1 --workers-per-gpu 8   # stages are 1, 2, 3, and 4 (= 3b)
+python run_jobs.py --stage 2 --gpus 0,1 --workers-per-gpu 8   # stages are 1, 2, 3, 4 (= 3b), 5, 6
 ```
 
 `RUN_ON_COLAB.md` gives the procedure for running the full experiment on a Colab A100 runtime, with results
@@ -107,6 +109,13 @@ mirrored to Google Drive so that an interrupted session can be resumed.
 - **Stage-2 line:** `subset`, `inner`, `test`, `selected`, `fold_evals` (= 800), `seconds`.
 - **Stage-3 / 3b file:** `selected`, `inner`, `targets.{tgt}`, which holds metrics for `automl` and every
   baseline (stage 3) or for the single variant (stage 3b).
+- **Stage-5 file:** `base_cfg` (the stage-1 configuration), `stage1_test_srocc`, `stage1_inner`,
+  `check_full_test_diff`, `check_full_inner_diff` (both 0 up to rounding), `n_fold_evals` (= 315), `seconds`, and
+  `records`: one entry per subset with `subset`, `cfg`, `inner`, `inner_folds`, `test`.
+- **Stage-6 `cross` file:** `selected` (stage-3 configuration), `alphas`, `omega.{alpha}` (effective weights),
+  `targets.{tgt}.{alpha}` (metrics), `checks.{tgt}` (α = 0 minus stage 3; 0), `seconds`.
+- **Stage-6 `indomain` file:** `selected` (stage-1 configuration), `alphas`, `inner.{alpha}`, `test.{alpha}`,
+  `check_alpha0_test_diff` (0), `seconds`.
 
 Per-split test predictions (`preds.npz`) are not shipped because of their size. The failure tables derived from
 them (`tables/per_distortion.csv`, `tables/per_reference.csv`) are shipped, and `stage4_analysis.py` keeps them

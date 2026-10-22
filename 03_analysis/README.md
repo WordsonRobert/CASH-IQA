@@ -4,11 +4,13 @@ These scripts run on CPU in seconds. They need only `../results/`, not the featu
 
 | Script | Reads | Writes | Purpose |
 |---|---|---|---|
-| `sanity_checks.py` | `results/stage1_automl`, `stage2_shapley`, `stage3*` | stdout (exit 1 on any problem) | Completeness (10 splits, 63 subsets, 6 + 18 transfer files); no NaN or zero scores; stage-2 budget accounting; stage-2 budget adequacy (budget 800 vs stage-1 1500 on the all-encoder subset); inner-vs-test gap |
+| `sanity_checks.py` | `results/stage1_automl`, `stage2_shapley`, `stage3*`, `stage5*`, `stage6*` | stdout (exit 1 on any problem) | Completeness (10 splits, 63 subsets, 6 + 18 transfer files, 60 stage-5 files, 6 + 60 stage-6 files); no NaN or zero scores; stage-2 budget accounting; stage-2 budget adequacy (budget 800 vs stage-1 1500 on the all-encoder subset); inner-vs-test gap; exact reproduction of stages 1 and 3 by stages 5 and 6 at their reference setting |
 | `shapley_fusion_gain.py` | `results/stage2_shapley` | `tables/shapley_gain.csv`, `shapley_interactions_gain.csv`, `shapley_baseline.csv` | Exact Shapley values and Grabisch interaction indices of the **fusion-gain game**, with 95% bootstrap CIs (5000 resamples over splits), for both the test game and the inner-CV game |
 | `compare_published.py` | `published_baselines.csv`, `tables/headline_*.csv` | `tables/comparison_published.csv` | Our numbers next to published ones, grouped by setting |
 | `published_baselines.csv` | – | – | 16 published methods with venue, setting, protocol, aggregation (median or mean), per-dataset SROCC, and the source URL of every number |
-| `make_figures.py` | `results/tables/*.csv`, `results/stage1_automl` | `figures/fig1…fig9.{pdf,png}` | All paper figures |
+| `noretune_shapley_check.py` | `results/stage2_shapley`, `stage5_noretune_shapley` | `tables/noretune_shapley_values.csv`, `noretune_shapley_agreement.csv`, `noretune_shapley_scale.csv` | Fusion-gain Shapley values of three games (exact, without re-tuning on test, without re-tuning on inner CV); rank agreement of values, interactions and subset values; the **pre-registered verdict** (ρ_φ ≥ 0.9 on ≥ 5 of 6 datasets); descriptive magnitude ratio, baselines, bootstrap and per-split agreement |
+| `transfer_shrinkage.py` | `results/stage3*`, `stage6_transfer_shrinkage` | `tables/transfer_shrinkage_{pairs,summary,curve,alpha_lodo,by_source,by_target}.csv`, `shrinkage_indomain.csv`, `shrinkage_indomain_tests.csv` | Leave-one-dataset-out choice of α per target; transfer by domain pair against full CASH, stage 3b and ridge; the **pre-registered verdict** (above full CASH and within 0.010 of ridge); in-domain cost of shrinking with paired tests |
+| `make_figures.py` | `results/tables/*.csv`, `results/stage1_automl` | `figures/fig1…fig11.{pdf,png}` | All paper figures |
 
 ## Why a second Shapley script?
 
@@ -33,6 +35,22 @@ moves by the same constant (−c/n), so rankings are unchanged, and interactions
 
 Both versions are shipped (`shapley.csv`, `shapley_interactions.csv` vs `shapley_gain.csv`,
 `shapley_interactions_gain.csv`). The paper uses the fusion-gain version.
+
+## Stages 5 and 6: what was fixed before the run
+
+Both follow-up analyses had their decision rule written into the scripts before any result existed, and the
+verdict lines are printed exactly as the rule dictates:
+
+- **Stage 5:** the no-re-tuning game "agrees" with the exact one if the Spearman correlation of the six
+  fusion-gain Shapley values is ≥ 0.9 on at least 5 of the 6 datasets. Result: AGREES (5/6 on test, 5/6 on
+  inner CV).
+- **Stage 6:** for target T, α*_T maximises the mean SROCC over the 20 transfer pairs among the other five
+  datasets (ties to the larger α); shrinkage "closes the gap" if its mean over the 30 pairs is above full CASH
+  and within 0.010 of ridge. Result: α* = 1 for every target, 0.709 vs 0.652 (full) and 0.742 (ridge):
+  DOES NOT CLOSE THE GAP.
+
+Everything printed below the line `descriptive (not part of the criterion)` was added afterwards to explain the
+results; it changes no verdict.
 
 ## The published comparison: caveats that matter
 

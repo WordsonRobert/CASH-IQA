@@ -1,0 +1,55 @@
+check: fixed game on the full encoder set vs stage-1 tpe_hb (must be ~0):
+  max |test diff| = 0.00e+00   max |inner diff| = 2.22e-16   over 60 splits
+
+fusion-gain Shapley values (mean over splits):
+ds          csiq                        kadid10k                        koniq10k                         livec                          spaq                        tid2013                       
+game       exact fixed_inner fixed_test    exact fixed_inner fixed_test    exact fixed_inner fixed_test  exact fixed_inner fixed_test  exact fixed_inner fixed_test   exact fixed_inner fixed_test
+encoder                                                                                                                                                                                           
+arniqa     0.065       0.103      0.108    0.062       0.128      0.122    0.006       0.010      0.010  0.013       0.019      0.015  0.005       0.007      0.006   0.093       0.149      0.132
+contrique  0.050       0.084      0.089    0.078       0.145      0.139    0.014       0.018      0.018  0.015       0.024      0.020  0.004       0.006      0.006   0.077       0.110      0.114
+resnet50  -0.006      -0.001     -0.002   -0.012      -0.025     -0.018    0.001       0.004      0.003 -0.002       0.002     -0.000 -0.000       0.001      0.001  -0.020      -0.016     -0.017
+dinov2    -0.028      -0.050     -0.064   -0.032      -0.065     -0.058    0.000       0.001      0.001  0.005       0.005      0.009  0.001       0.002      0.002  -0.017      -0.039     -0.043
+clip       0.028       0.036      0.037    0.038       0.087      0.078    0.018       0.022      0.021  0.049       0.059      0.055  0.007       0.010      0.009   0.020       0.031      0.038
+mae       -0.011      -0.015     -0.007    0.004      -0.012     -0.018    0.008       0.008      0.008  0.008       0.001      0.000  0.003       0.003      0.002  -0.015      -0.016     -0.020
+
+agreement with the exact re-tuned game:
+      ds        game  n_splits  rho_phi  rho_int  rho_v  max_dphi  sign_agree  top2_same
+kadid10k  fixed_test        10    0.943    0.846  0.970     0.061           5       True
+kadid10k fixed_inner        10    1.000    0.929  0.962     0.067           5       True
+    csiq  fixed_test        10    1.000    0.946  0.882     0.044           6       True
+    csiq fixed_inner        10    1.000    0.911  0.836     0.038           6       True
+ tid2013  fixed_test        10    0.829    0.496  0.926     0.039           6       True
+ tid2013 fixed_inner        10    0.943    0.343  0.937     0.056           6       True
+koniq10k  fixed_test        10    0.943    0.979  0.979     0.004           6       True
+koniq10k fixed_inner        10    0.943    0.964  0.978     0.005           6       True
+   livec  fixed_test        10    0.943    0.900  0.981     0.007           6       True
+   livec fixed_inner        10    0.829    0.839  0.975     0.010           5       True
+    spaq  fixed_test        10    1.000    0.861  0.925     0.002           5       True
+    spaq fixed_inner        10    1.000    0.864  0.930     0.003           5       True
+
+fixed_test: rho_phi >= 0.9 on 5/6 datasets  ->  AGREES (criterion: >= 5 of 6)
+
+fixed_inner: rho_phi >= 0.9 on 5/6 datasets  ->  AGREES (criterion: >= 5 of 6)
+
+compute: exact searches 56.37 worker-h vs fixed game 0.467 worker-h (x121)
+
+descriptive (not part of the criterion): magnitude, baseline and split-level agreement
+      ds  c_exact  c_fixed  gain_exact  gain_fixed  single_gap  scale_test  scale_inner  rho_phi_lo95  rho_phi_hi95  rho_phi_split_median  rho_phi_split_min
+kadid10k    0.813    0.706       0.138       0.246       0.108       1.864        1.981         0.943           1.0                 0.943              0.829
+    csiq    0.853    0.800       0.098       0.162       0.053       1.705        1.593         0.943           1.0                 0.943              0.714
+ tid2013    0.767    0.702       0.138       0.205       0.065       1.463        1.524         0.771           1.0                 0.857              0.543
+koniq10k    0.886    0.874       0.047       0.061       0.012       1.223        1.270         0.886           1.0                 0.886              0.600
+   livec    0.809    0.798       0.087       0.101       0.011       1.143        1.227         0.771           1.0                 0.829              0.086
+    spaq    0.905    0.896       0.019       0.026       0.009       1.285        1.415         0.829           1.0                 0.829              0.371
+
+single-encoder test SROCC lost by not re-tuning, v_exact({e}) - v_fixed({e}) (mean over splits):
+          arniqa  contrique  resnet50  dinov2   clip    mae
+ds                                                         
+kadid10k   0.004      0.002     0.152   0.231  0.042  0.214
+csiq       0.001      0.005     0.049   0.188  0.023  0.050
+tid2013    0.010      0.011     0.056   0.197  0.016  0.099
+koniq10k   0.007      0.006     0.009   0.021  0.011  0.017
+livec      0.008      0.004     0.004   0.008  0.004  0.034
+spaq       0.007      0.009     0.007   0.010  0.006  0.013
+
+wrote results/tables/noretune_shapley_values.csv, noretune_shapley_agreement.csv, noretune_shapley_scale.csv

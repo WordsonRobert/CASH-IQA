@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# The complete pipeline as it was run for the paper (GPU required; ~12 h on one A100-80GB).
+# The complete pipeline as it was run for the paper (GPU required; ~12 h on one A100-80GB; stages 5 + 6 add ~10 min).
 # Resumable: every job writes its own output and finished jobs are skipped, so just rerun after any interruption.
 #   bash run_all.sh                 # all visible GPUs
 #   bash run_all.sh --gpus 0,1      # extra args go to run_jobs.py
@@ -13,8 +13,12 @@ PY=${PY:-$(command -v python || command -v python3)}
 "$PY" run_jobs.py --stage 4 "$@"            # stage 3b: transfer decomposition (global / equal weights)
 "$PY" stage3b_summary.py                    # -> ../results/tables/cross_transfer.csv
 "$PY" stage4_analysis.py                    # -> ../results/tables/*.csv, ../results/report_stage4.md
+"$PY" run_jobs.py --stage 5 "$@"            # attribution without re-tuning (needs stage 1)
+"$PY" run_jobs.py --stage 6 "$@"            # transfer shrinkage (needs stages 1 and 3)
 "$PY" ../03_analysis/sanity_checks.py       # integrity checks; exits 1 on any problem
 "$PY" ../03_analysis/shapley_fusion_gain.py # -> re-baselined Shapley values / interactions with CIs
 "$PY" ../03_analysis/compare_published.py  # -> ../results/tables/comparison_published.csv
+"$PY" ../03_analysis/noretune_shapley_check.py > ../results/report_stage5.txt   # stage 5 vs exact Shapley
+"$PY" ../03_analysis/transfer_shrinkage.py     > ../results/report_stage6.txt   # stage 6 shrinkage analysis
 "$PY" ../03_analysis/make_figures.py        # -> ../figures/*.pdf|png
 echo "ALL DONE"

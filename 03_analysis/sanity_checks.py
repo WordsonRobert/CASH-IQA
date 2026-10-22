@@ -9,6 +9,10 @@ any table was trusted; they print PROBLEMS: none when everything is in order.
   3. budget accounting: every stage-2 search used exactly its fold-evaluation budget
   4. stage-2 budget adequacy: all-six-encoder subset at budget 800 vs stage-1 TPE+Hyperband at 1500 (same splits)
   5. selection sanity: inner-CV vs test gap of the selected model (nested protocol)
+  6. stage 5 (attribution without re-tuning): 10 splits x 63 subsets per dataset; the full encoder set must
+     reproduce the stage-1 TPE+Hyperband test and inner scores exactly
+  7. stage 6 (transfer shrinkage): 6 sources + 60 in-domain jobs; alpha = 0 must reproduce stage 3 (cross) and
+     stage 1 (in-domain) exactly
 
     python sanity_checks.py
 """
@@ -80,6 +84,28 @@ for ds in DS:
     for fpath in glob.glob(str(R / "stage1_automl" / "main" / "nested" / ds / "split*" / "tpe_hb.json")):
         o = json.load(open(fpath)); gap.append(o["inner"] - o["test"]["srocc"])
     print(f"  {ds:<9} {np.median(gap):+.4f}")
+
+print("=" * 100, "\n6) STAGE 5 completeness + reproduction of stage 1 by the full encoder set (no re-tuning)")
+TOL = 1e-6
+for ds in DS:
+    fs = sorted(glob.glob(str(R / "stage5_noretune_shapley" / ds / "split*.json"))); dmax = 0.0
+    for fpath in fs:
+        o = json.load(open(fpath))
+        if len(o["records"]) != 2 ** len(E) - 1: problems.append(f"stage5 {fpath}: {len(o['records'])} subsets")
+        if any(bad(r["test"]["srocc"]) for r in o["records"]): problems.append(f"stage5 {fpath}: bad score")
+        dmax = max(dmax, abs(o["check_full_test_diff"]), abs(o["check_full_inner_diff"]))
+    print(f"  {ds:<9} splits {len(fs):>2}/10 | max |full-set diff vs stage 1| {dmax:.1e}")
+    len(fs) < 10 and problems.append(f"stage5 {ds}: {len(fs)}/10 splits")
+    dmax > TOL and problems.append(f"stage5 {ds}: full set does not reproduce stage 1 ({dmax:.1e})")
+
+print("=" * 100, "\n7) STAGE 6 completeness + reproduction at alpha = 0 (stage 3 cross, stage 1 in-domain)")
+S6 = R / "stage6_transfer_shrinkage"
+nc = sorted(glob.glob(str(S6 / "cross" / "*.json"))); ni = sorted(glob.glob(str(S6 / "indomain" / "*" / "split*.json")))
+dc = max([abs(x) for f in nc for x in json.load(open(f))["checks"].values()] or [0.0])
+di = max([abs(json.load(open(f))["check_alpha0_test_diff"]) for f in ni] or [0.0])
+print(f"  cross {len(nc)}/6 (max |alpha=0 - stage 3| {dc:.1e})   in-domain {len(ni)}/60 (max |alpha=0 - stage 1| {di:.1e})")
+len(nc) < 6 and problems.append("stage6 cross incomplete"); len(ni) < 60 and problems.append("stage6 in-domain incomplete")
+max(dc, di) > TOL and problems.append(f"stage6: alpha=0 does not reproduce stages 1/3 ({max(dc, di):.1e})")
 
 print("=" * 100)
 print("PROBLEMS:", problems[:20] if problems else "none")

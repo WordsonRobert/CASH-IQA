@@ -11,6 +11,8 @@ All paper figures from the shipped results (CPU, ~10 s).  python make_figures.py
   fig7_transfer_decomposition     mean cross-dataset SROCC by domain pair for the five transfer variants
   fig8_per_distortion             within-type SROCC per distortion type (KADID-10k, TID2013)
   fig9_encoder_weights            effective fusion weight w_e^2 / sum w^2 of the selected models
+  fig10_noretune_vs_exact_shapley Shapley values without re-tuning (stage 5) against the exact re-tuned values (stage 2)
+  fig11_transfer_shrinkage        cross-dataset SROCC vs weight shrinkage alpha, and its in-domain cost (stage 6)
 """
 import json, glob
 from pathlib import Path
@@ -226,5 +228,55 @@ def fig9():
     save(fig, "fig9_encoder_weights")
 
 
+# ---------------------------------------------------------------- fig10
+def fig10():
+    v = pd.read_csv(T / "noretune_shapley_values.csv"); a = pd.read_csv(T / "noretune_shapley_agreement.csv")
+    x = pd.read_csv(T / "noretune_shapley_scale.csv").set_index("ds")
+    fig, axes = plt.subplots(2, 3, figsize=(10, 6.2))
+    for ax, ds in zip(axes.flat, DS):
+        ex = v[(v.ds == ds) & (v.game == "exact")].set_index("encoder").phi.reindex(E)
+        fx = v[(v.ds == ds) & (v.game == "fixed_test")].set_index("encoder").phi.reindex(E)
+        lim = 1.1 * max(np.abs(ex).max(), np.abs(fx).max())
+        ax.plot([-lim, lim], [-lim, lim], color=LGREY, lw=1, ls="--"); ax.axhline(0, color="#eceef1", lw=0.6); ax.axvline(0, color="#eceef1", lw=0.6)
+        ax.scatter(ex, fx, s=30, color=ACC if ds in SYN else GREY, zorder=3)
+        ABR = {"arniqa": "AR", "contrique": "CO", "resnet50": "RN", "dinov2": "DI", "clip": "CL", "mae": "MA"}
+        for e in E:                                               # label goes left if a close neighbour sits to its right
+            right = not any(o != e and 0 <= ex[o] - ex[e] < 0.3 * lim and abs(fx[o] - fx[e]) < 0.08 * lim for o in E)
+            ax.annotate(ABR[e], (ex[e], fx[e]), fontsize=7, xytext=(5 if right else -5, -3), textcoords="offset points",
+                        ha="left" if right else "right")
+        r = a[(a.ds == ds) & (a.game == "fixed_test")].iloc[0]
+        ax.set_title(f"{NAME[ds]}   rho = {r.rho_phi:.2f}, scale x{x.loc[ds, 'scale_test']:.2f}", fontsize=9)
+        ax.set_xlim(-lim, lim); ax.set_ylim(-lim, lim); ax.set_xlabel("exact (every subset re-tuned)", fontsize=8)
+        ax.set_ylabel("without re-tuning", fontsize=8)
+    fig.suptitle("Shapley share of the fusion gain without re-tuning (stage 5, ~1/120 of the compute) vs exact (stage 2); dashed = identity\n"
+                 "AR ARNIQA, CO CONTRIQUE, RN ResNet-50, DI DINOv2, CL CLIP, MA MAE", fontsize=9.5)
+    fig.tight_layout(); save(fig, "fig10_noretune_vs_exact_shapley")
+
+
+# ---------------------------------------------------------------- fig11
+def fig11():
+    c = pd.read_csv(T / "transfer_shrinkage_curve.csv"); s = pd.read_csv(T / "transfer_shrinkage_summary.csv", index_col=0)
+    ind = pd.read_csv(T / "shrinkage_indomain.csv")
+    fig, axes = plt.subplots(1, 2, figsize=(10.5, 3.7))
+    ax = axes[0]
+    sty = {"A->A": (GREY, "-"), "A->S": (GREY, "--"), "S->A": (ACC, "-"), "S->S": (ACC, "--")}
+    for k, (col, ls) in sty.items():
+        ax.plot(c.alpha, c[k], color=col, ls=ls, lw=1.4, label=k)
+        ax.plot([1.04], [s.loc[k, "ridge_concat"]], marker="<", color=col, ms=6)
+    ax.plot(c.alpha, c.mean_all_pairs, color=DARK, lw=2.2, label="all 30 pairs")
+    ax.plot([1.04], [s.loc[s.index[-1], "ridge_concat"]], marker="<", color=DARK, ms=7)
+    ax.set_xlabel("shrinkage alpha  (0 = tuned weights, 1 = equal weights)"); ax.set_ylabel("mean cross-dataset SROCC")
+    ax.set_title("Transfer improves monotonically with shrinkage\n(triangles: ridge on concatenated features)")
+    ax.legend(frameon=False, fontsize=7.5, ncol=3, loc="lower right"); ax.grid(color="#eceef1", lw=0.6)
+    ax = axes[1]
+    m = ind.pivot_table(index="alpha", columns="ds", values="test", aggfunc="median")
+    for ds in DS:
+        ax.plot(m.index, m[ds], color=ACC if ds in SYN else GREY, lw=1.4, ls="-" if ds in ("kadid10k", "koniq10k") else ("--" if ds in ("csiq", "livec") else ":"), label=NAME[ds])
+    ax.set_xlabel("shrinkage alpha"); ax.set_ylabel("in-domain test SROCC (median, nested)")
+    ax.set_title("In-domain cost of shrinking\n(inner CV prefers alpha = 0 on 58/60 splits)")
+    ax.legend(frameon=False, fontsize=7.5, ncol=2); ax.grid(color="#eceef1", lw=0.6)
+    fig.tight_layout(); save(fig, "fig11_transfer_shrinkage")
+
+
 if __name__ == "__main__":
-    for f in [fig1, fig2, fig3, fig4, fig5, fig6, fig7, fig8, fig9]: f()
+    for f in [fig1, fig2, fig3, fig4, fig5, fig6, fig7, fig8, fig9, fig10, fig11]: f()

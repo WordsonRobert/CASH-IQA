@@ -8,6 +8,8 @@ The experiments were run on a single Colab A100-80GB runtime, with features and 
 | Stage 2 (budget 800) | 9.48 h, in a fresh runtime |
 | Stage 3 | 5 min |
 | Stage 3b | 11 min |
+| Stage 5 (no re-tuning) | 5.5 min, in a fresh runtime |
+| Stage 6 (shrinkage) | 2.5 min, same runtime as stage 5 |
 
 Colab sessions end without warning, so the run is built around three properties:
 
@@ -62,7 +64,7 @@ bash 02_automl_pipeline/status.sh || true
 
 ```python
 import subprocess
-STAGE = "1"        # "1", then "2", "3", "4" (= 3b); stage 0 runs once first:  !cd /content/CASH-IQA/02_automl_pipeline && python stage0_prepare.py
+STAGE = "1"        # "1", then "2", "3", "4" (= 3b), "5", "6"; stage 0 runs once first:  !cd /content/CASH-IQA/02_automl_pipeline && python stage0_prepare.py
 cmd = f"cd /content/CASH-IQA/02_automl_pipeline && nohup python run_jobs.py --stage {STAGE} > /content/run_stage{STAGE}.log 2>&1 &"
 subprocess.run(cmd, shell=True)
 ```
@@ -71,6 +73,13 @@ To run stages 2 and 3 back to back in one runtime:
 
 ```
 cd 02_automl_pipeline && (python run_jobs.py --stage 2 && python run_jobs.py --stage 3) > /content/run_s23.log 2>&1 &
+```
+
+Stages 5 and 6 only re-score configurations that stages 1 and 3 already selected, so they need those results
+(restored by cell 2) and take about 8 minutes together:
+
+```
+cd 02_automl_pipeline && (python run_jobs.py --stage 5 && python run_jobs.py --stage 6) > /content/run_s56.log 2>&1 &
 ```
 
 ### Cell 4: monitor and Drive backup (re-run it any time; it refreshes itself)
@@ -94,7 +103,10 @@ while True:
 %%bash
 cd /content/CASH-IQA/02_automl_pipeline
 python stage3b_summary.py && python stage4_analysis.py
-cd .. && python 03_analysis/sanity_checks.py && python 03_analysis/shapley_fusion_gain.py && python 03_analysis/make_figures.py
+cd .. && python 03_analysis/sanity_checks.py && python 03_analysis/shapley_fusion_gain.py
+python 03_analysis/noretune_shapley_check.py > results/report_stage5.txt
+python 03_analysis/transfer_shrinkage.py > results/report_stage6.txt
+python 03_analysis/make_figures.py
 rsync -a results/ figures /content/drive/MyDrive/CASH-IQA/out/
 ```
 

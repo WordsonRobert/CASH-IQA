@@ -21,7 +21,7 @@ yaml.safe_dump(c, open(sys.argv[2], "w"))
 PYEOF
 CFG="$OUT/config_smoke.yaml"
 "$PY" "$HERE/stage0_prepare.py" --config "$CFG"
-for s in 1 2 3 4; do "$PY" "$HERE/run_jobs.py" --stage $s --config "$CFG"; done
+for s in 1 2 3 4 5 6; do "$PY" "$HERE/run_jobs.py" --stage $s --config "$CFG"; done
 CASHIQA_CONFIG="$CFG" "$PY" "$HERE/stage3b_summary.py"
 "$PY" "$HERE/stage4_analysis.py" --config "$CFG"
 echo "SMOKE TEST OK -> $OUT/results/report_stage4.md"
